@@ -1,4 +1,6 @@
 import unittest
+import sys 
+sys.path.append('D:\Vscode\studying\cs-102-template')
 from src.lab2.vigenre import encrypt_vigenere
 from src.lab2.vigenre import decrypt_vigenere
 
@@ -11,4 +13,4 @@ class TestVigenre(unittest.TestCase):
     def test_decrypt_vigenere(self):
         self.assertEqual(decrypt_vigenere("PYTHON", "A"), 'PYTHON')
         self.assertEqual(decrypt_vigenere("python", "a"), 'python')
-        self.assertEqual(decrypt_vigenere("LXFOPVEFRNHR", "LEMON"), 'ATTACKATDAWN') 
+        self.assertEqual(decrypt_vigenere("LXFOPVEFRNHR", "LEMON"), 'ATTACKATDAWN')
