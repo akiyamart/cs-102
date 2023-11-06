@@ -55,6 +55,3 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
             plaintext += letter
     
     return plaintext
-# a = encrypt_vigenere('ATTACKATDAWN', 'LEMON')
-# b = decrypt_vigenere(a, 'LEMON')
-# print(a, b, sep='\n')
