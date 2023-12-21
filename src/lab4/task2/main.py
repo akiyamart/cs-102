@@ -64,20 +64,32 @@ class AgeGroupsManager:
 
     def read_participants_from_file(self, file_path):
         """Чтение участников из файла и добавление их в соответствующие возрастные группы."""
-        with open(file_path, 'r', encoding='utf-8') as file:
-            for line in file:
-                if line.strip() == "END":
-                    break
-                else:
-                    name, age = line.strip().split(',')
-                    participant = SurveyParticipant(name, int(age))
-                    self.add_participant(participant)
+        try:
+            with open(file_path, 'r', encoding='utf-8') as file:
+                for line in file:
+                    if line.strip() == "END":
+                        break
+                    else:
+                        try:
+                            name, age = line.strip().split(',')
+                            participant = SurveyParticipant(name, int(age))
+                            self.add_participant(participant)
+                        except ValueError:
+                            print(f"Ошибка в формате строки: {line}")
+        except FileNotFoundError:
+            print(f"Файл не найден: {file_path}")
 
 
 if __name__ == "__main__":
-    age_boundaries = list(map(int, input('Введите возрастные границы:').split()))
-    age_groups_manager = AgeGroupsManager(age_boundaries)
-    age_groups_manager.read_participants_from_file(input_file)
-    age_groups_info = age_groups_manager.get_age_groups_info()
-    for group_info in age_groups_info:
-        print(group_info)
+    try:
+        age_boundaries = list(map(int, input('Введите возрастные границы:').split()))
+        if sorted(age_boundaries) != age_boundaries:
+            raise ValueError("Границы возраста должны быть в порядке возрастания.")
+        
+        age_groups_manager = AgeGroupsManager(age_boundaries)
+        age_groups_manager.read_participants_from_file(input_file)
+        age_groups_info = age_groups_manager.get_age_groups_info()
+        for group_info in age_groups_info:
+            print(group_info)
+    except ValueError as e:
+        print(f"Ошибка ввода: {e}")
